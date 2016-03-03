@@ -1,19 +1,27 @@
 language: php
 
-php: 
-  - 5.3
-  - 5.4
+php:
   - 5.5
   - 5.6
-  
-before_script: 
-  - mkdir -p shippable/codecoverage
-  - mkdir -p shippable/testresults
 
-script:
-   - phpunit  --log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage tests/calculator_test.php
+env:
+  global:
+    - secure: ...
+    - COMPOSER_NO_INTERACTION=1
+  matrix:
+    - ...
+    - TYPO3_VERSION=~6.2
+    - TYPO3_VERSION=^7.6
 
-notifications:
-   email: false
+#matrix:
+#  include:
+#    - php: 7.0
+#      env: TYPO3_VERSION=^7.6
 
-      
+build:
+  ci:
+    - ls -l
+  on_success:
+    - echo 'succeeded'
+
+
